@@ -1,0 +1,31 @@
+src/cli.js
+  h_6ead61b4ceda93 1002
+  s_4fe99274557183::t_9cada687ff9cfa 1000-1001,1003-1004
+README.md
+  s_4fe99274557183::t_9cada687ff9cfa 36
+package.json
+  s_4fe99274557183::t_9cada687ff9cfa 3
+.gitignore
+  h_6ead61b4ceda93 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.17-trip",
+  "base_commit_sha": "97cd2baae87ce87c45c82cf728b50f5203ab0914",
+  "prompts": {},
+  "humans": {
+    "h_6ead61b4ceda93": {
+      "author": "ichengzi <chengzi12130@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_4fe99274557183": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ecf44-3f47-7a02-9405-d06a46ae081e",
+        "model": "gpt-5.5"
+      },
+      "human_author": "ichengzi <chengzi12130@gmail.com>"
+    }
+  }
+}
