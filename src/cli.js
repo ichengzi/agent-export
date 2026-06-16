@@ -1,12 +1,14 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import initSqlJs from "sql.js";
 
-export function runCli(argv = process.argv.slice(2)) {
+let sqliteModulePromise;
+
+export async function runCli(argv = process.argv.slice(2)) {
   try {
     const args = parseArgs(argv);
-    const session = findSessionForExport(args);
+    const session = await findSessionForExport(args);
     const events = loadPreviewEvents(session.provider, session.rollout_path);
     const payload = {
       session,
@@ -108,12 +110,12 @@ function requiredValue(value, flag) {
   return value;
 }
 
-function findSessionForExport(args) {
+async function findSessionForExport(args) {
   const providers = args.provider ? [args.provider] : ["codex", "claude"];
   const matches = [];
   for (const provider of providers) {
     if (provider === "codex") {
-      matches.push(...findCodexMatches(args.id, args.codexDir));
+      matches.push(...(await findCodexMatches(args.id, args.codexDir)));
     } else {
       matches.push(...findClaudeMatches(args.id, args.claudeDir));
     }
@@ -148,8 +150,7 @@ function ambiguousSessionError(idOrPrefix, matches) {
   );
 }
 
-function findCodexMatches(idOrPrefix, codexDir) {
-  ensureSqlite3Available();
+async function findCodexMatches(idOrPrefix, codexDir) {
   const dbPath = path.join(codexDir, "state_5.sqlite");
   if (!fs.existsSync(dbPath)) {
     return [];
@@ -176,17 +177,10 @@ function findCodexMatches(idOrPrefix, codexDir) {
     WHERE id LIKE '${sqlQuote(likeValue)}' ESCAPE '\\'
     ORDER BY updated_at DESC
   `;
-  return runSqliteJson(dbPath, sql).map((row) =>
+  const rows = await runSqliteRows(dbPath, sql);
+  return rows.map((row) =>
     createCodexSessionSummary(row, codexDir),
   );
-}
-
-function ensureSqlite3Available() {
-  try {
-    execFileSync("sqlite3", ["--version"], { encoding: "utf8" });
-  } catch {
-    throw new Error("导出 codex session 需要本机安装 sqlite3 命令");
-  }
 }
 
 function createCodexSessionSummary(row, codexDir) {
@@ -224,22 +218,31 @@ function createCodexSessionSummary(row, codexDir) {
   };
 }
 
-function runSqliteJson(dbPath, sql) {
-  let stdout = "";
+async function runSqliteRows(dbPath, sql) {
+  let db;
   try {
-    stdout = execFileSync("sqlite3", ["-json", dbPath, sql], {
-      encoding: "utf8",
-      maxBuffer: 16 * 1024 * 1024,
-    });
+    const SQL = await getSqliteModule();
+    db = new SQL.Database(fs.readFileSync(dbPath));
+    const [result] = db.exec(sql);
+    if (!result) {
+      return [];
+    }
+    return result.values.map((values) =>
+      Object.fromEntries(
+        result.columns.map((column, index) => [column, values[index]]),
+      ),
+    );
   } catch (error) {
-    const stderr = error.stderr ? String(error.stderr).trim() : "";
-    throw new Error(stderr || `读取 sqlite 失败: ${dbPath}`);
+    const message = error?.message ? String(error.message) : String(error);
+    throw new Error(message || `读取 sqlite 失败: ${dbPath}`);
+  } finally {
+    db?.close();
   }
-  const trimmed = stdout.trim();
-  if (!trimmed) {
-    return [];
-  }
-  return JSON.parse(trimmed);
+}
+
+function getSqliteModule() {
+  sqliteModulePromise ??= initSqlJs();
+  return sqliteModulePromise;
 }
 
 function findClaudeMatches(idOrPrefix, claudeDir) {

@@ -49,6 +49,6 @@ agent-export <session-id> --output ./claude-session.html
 
 ## 依赖
 
-这个包本身是纯 JS，但导出 Codex session 时依赖本机 `sqlite3` 命令。
+这个包通过 `sql.js` 直接读取 Codex 的 SQLite 数据库，不依赖本机 `sqlite3` 命令。
 
-Claude 导出不依赖 `sqlite3`。
+Claude 导出不需要读取 SQLite。
