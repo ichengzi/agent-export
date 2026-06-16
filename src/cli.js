@@ -997,7 +997,11 @@ function readJsonlObjects(filePath) {
 }
 
 function defaultExportHtmlPath(session) {
-  return `${sanitizeFilenamePart(session.provider)}-${sanitizeFilenamePart(session.id)}.html`;
+  return path.join(
+    os.tmpdir(),
+    'agent-export',
+    `${sanitizeFilenamePart(session.provider)}-${sanitizeFilenamePart(session.id)}.html`,
+  );
 }
 
 function sanitizeFilenamePart(value) {

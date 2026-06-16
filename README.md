@@ -33,7 +33,7 @@ agent-export <session-id> --output ./claude-session.html
 ## 默认行为
 
 - 不传 `--provider` 时，先查 `codex`，再查 `claude`
-- 默认输出文件名为 `{provider}-{sessionId}.html`
+- 默认输出文件路径为系统 temp 目录下的 `{provider}-{sessionId}.html`
 - 默认读取：
   - Codex: `~/.codex`
   - Claude: `~/.claude`

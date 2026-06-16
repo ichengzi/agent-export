@@ -1,6 +1,6 @@
 {
   "name": "agent-export",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "export codex or claude code sessions to a single interactive HTML file.",
   "type": "module",
   "bin": {
