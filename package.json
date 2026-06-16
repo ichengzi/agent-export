@@ -1,0 +1,33 @@
+{
+  "name": "agent-export",
+  "version": "0.1.0",
+  "description": "Export Codex or Claude sessions to a single interactive HTML file.",
+  "type": "module",
+  "bin": {
+    "agent-export": "./bin/agent-export.js"
+  },
+  "exports": {
+    ".": "./src/cli.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "check": "node --check ./src/cli.js",
+    "check:bin": "node --check ./bin/agent-export.js"
+  },
+  "keywords": [
+    "codex",
+    "claude",
+    "session",
+    "export",
+    "html",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
