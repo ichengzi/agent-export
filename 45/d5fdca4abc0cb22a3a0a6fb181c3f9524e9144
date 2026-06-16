@@ -1,0 +1,40 @@
+README.md
+  s_db465445b71498::t_3fb3bb891bff62 52,54
+package.json
+  s_606c449b37bddd::t_689ab6fb906321 32-35
+bin/agent-export.js
+  s_db465445b71498::t_b826c5e76bc738 5
+.gitignore
+  h_107666cae20e57 5
+src/cli.js
+  s_db465445b71498::t_126fb26643d232 4,6-8,11,113,118,153,180-181,221-222,224-234,236-239,241-245
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.17-trip",
+  "base_commit_sha": "45d5fdca4abc0cb22a3a0a6fb181c3f9524e9144",
+  "prompts": {},
+  "humans": {
+    "h_107666cae20e57": {
+      "author": "wcl王成磊 <chengleiwang@trip.com>"
+    }
+  },
+  "sessions": {
+    "s_606c449b37bddd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "019ecf0f-10ba-7a40-b7de-14dba0bf5fa8",
+        "model": "unknown"
+      },
+      "human_author": "wcl王成磊 <chengleiwang@trip.com>"
+    },
+    "s_db465445b71498": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ecf0f-10ba-7a40-b7de-14dba0bf5fa8",
+        "model": "gpt-5.5"
+      },
+      "human_author": "wcl王成磊 <chengleiwang@trip.com>"
+    }
+  }
+}
