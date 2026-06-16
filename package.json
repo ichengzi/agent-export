@@ -1,7 +1,7 @@
 {
   "name": "agent-export",
   "version": "0.1.0",
-  "description": "Export Codex or Claude sessions to a single interactive HTML file.",
+  "description": "export codex or claude code sessions to a single interactive HTML file.",
   "type": "module",
   "bin": {
     "agent-export": "./bin/agent-export.js"
