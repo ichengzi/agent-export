@@ -1,0 +1,14 @@
+package.json
+  h_6ead61b4ceda93 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.17-trip",
+  "base_commit_sha": "ee1ee62cdbc1b923d5937dc346164f77e1ba303e",
+  "prompts": {},
+  "humans": {
+    "h_6ead61b4ceda93": {
+      "author": "ichengzi <chengzi12130@gmail.com>"
+    }
+  }
+}
